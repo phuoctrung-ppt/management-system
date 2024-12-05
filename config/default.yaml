@@ -1,0 +1,15 @@
+env: development
+app:
+  port: 3000
+database:
+  type: postgres
+  host: localhost
+  port: 5432
+  database: hr_management
+  user: postgres
+  password: postgres
+redis:
+  host: localhost
+  port: 6379
+  password:
+  ttl: 60
