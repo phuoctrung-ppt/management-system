@@ -17,10 +17,14 @@ export class CacheService {
     return `${name}:${userId}`;
   }
 
-  async set(userId: string, key: string, value: Record<string, unknown>) {
+  async set<T>(userId: string, key: string, value: T) {
     const cacheKey = this.createCacheKey(key, userId);
     return this.cache.set(cacheKey, JSON.stringify(value), {
       ttl: this.cacheTtl,
     });
+  }
+
+  async get(key: string): Promise<string> {
+    return this.cache.get(key);
   }
 }
