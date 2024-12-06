@@ -6,6 +6,7 @@ import configuration from 'config/configuration';
 import { CacheModule } from './modules/cache/cache.module';
 import { DatabaseModule } from './configs/database.module';
 import { TerminusModule } from '@nestjs/terminus';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { TerminusModule } from '@nestjs/terminus';
     CacheModule,
     DatabaseModule,
     TerminusModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [ AppService],
