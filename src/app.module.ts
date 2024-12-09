@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { DatabaseModule } from './configs/database.module';
 import { CacheModule } from './modules/cache/cache.module';
 import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UsersModule } from './modules/users/users.module';
     DatabaseModule,
     TerminusModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
