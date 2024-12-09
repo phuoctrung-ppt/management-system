@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { TerminusModule } from '@nestjs/terminus';
+import configuration from 'config/configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
-import configuration from 'config/configuration';
-import { CacheModule } from './modules/cache/cache.module';
 import { DatabaseModule } from './configs/database.module';
-import { TerminusModule } from '@nestjs/terminus';
+import { CacheModule } from './modules/cache/cache.module';
 import { UsersModule } from './modules/users/users.module';
 
 @Module({
@@ -17,9 +17,9 @@ import { UsersModule } from './modules/users/users.module';
     CacheModule,
     DatabaseModule,
     TerminusModule,
-    UsersModule
+    UsersModule,
   ],
   controllers: [AppController],
-  providers: [ AppService],
+  providers: [AppService],
 })
 export class AppModule {}
