@@ -1,6 +1,7 @@
 import { BaseEntity } from '../../../shared/base-entity';
 import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 import { hashSync, genSaltSync } from 'bcrypt';
+import { UserRole } from 'src/shared/enum';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -22,6 +23,9 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   password: string;
 
+  @Column({ nullable: true, enum: UserRole })
+  role: UserRole;
+  
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {

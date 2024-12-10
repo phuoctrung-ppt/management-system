@@ -18,3 +18,4 @@ jwt:
   expired: 3600
   publicKey:
   algorithm: RS256
+

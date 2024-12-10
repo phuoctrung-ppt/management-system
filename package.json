@@ -20,7 +20,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migration:create": "pnpm typeorm migration:create ./src/migrations/${MIGRATION_NAME}",
-    "migration:run": "pnpm typeorm migration:run -d ./src/migrations/data-source.ts"
+    "migration:run": "pnpm typeorm migration:run -d ./src/migrations/data-source.ts",
+    "migration:revert": "pnpm typeorm schema:drop -d ./src/migrations/data-source.ts",
+    "seed:run": "pnpm run build && ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d ./src/migrations/data-source.ts"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.3.0",
@@ -48,7 +50,8 @@
     "reflect-metadata": "^0.2.0",
     "rimraf": "^6.0.1",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "typeorm-extension": "^3.6.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

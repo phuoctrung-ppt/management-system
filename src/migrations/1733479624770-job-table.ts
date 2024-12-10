@@ -1,7 +1,14 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
 export class JobTable1733479624770 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
+
     await queryRunner.createTable(
       new Table({
         name: 'jobs',
@@ -27,8 +34,8 @@ export class JobTable1733479624770 implements MigrationInterface {
           {
             name: 'job_type',
             type: 'enum',
-            enum: ['Fulltime', 'Partime', 'Internship'],
-            default: `'Fulltime'`,
+            enum: ['FULL_TIME', 'PART_TIME', 'CONTRACT', 'INTERNSHIP'],
+            default: `'FULL_TIME'`,
           },
           { name: 'salary_range', type: 'varchar', length: '100' },
           {
@@ -37,11 +44,20 @@ export class JobTable1733479624770 implements MigrationInterface {
             enum: ['OPEN', 'CLOSED'],
             default: `'OPEN'`,
           },
-          { name: 'created_by', type: 'varchar', length: '255' },
-          { name: 'ended_date', type: 'timestamp' },
+          { name: 'created_by', type: 'uuid' },
+          { name: 'ended_date', type: 'timestamp', isNullable: true },
           { name: 'created_at', type: 'timestamp', default: 'now()' },
           { name: 'updated_at', type: 'timestamp', default: 'now()' },
         ],
+      }),
+    );
+    await queryRunner.createForeignKey(
+      'jobs',
+      new TableForeignKey({
+        columnNames: ['created_by'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'users',
+        onDelete: 'CASCADE',
       }),
     );
   }

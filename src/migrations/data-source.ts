@@ -4,7 +4,8 @@ import { join } from 'path';
 
 // Load environment variables
 config();
-console.log(join(__dirname, '../migrations/*{.ts,.js}'))
+// Log all environment variables
+console.log('Environment Variables:', process.env);
 const AppDataSource = new DataSource({
   type: 'postgres', // your database type
   host: process.env.DATABASE_HOST, // your database host
@@ -12,8 +13,9 @@ const AppDataSource = new DataSource({
   username: process.env.DATABASE_USER, // your database username
   password: process.env.DATABASE_PASSWORD, // your database password
   database: process.env.DATABASE_NAME, // your database name
-  //   entities: [__dirname + '/../entities/*.entity{.ts,.js}'],
-  migrations: [join(__dirname, '../migrations/*{.ts,.js}')],
+  entities: [__dirname + '/../entities/*.entity{.ts,.js}'],
+  dropSchema: true,
+  migrations: [join(__dirname, '../migrations/1733479712248-appointment-table.ts')],
   synchronize: false, // Don't use synchronize in production
   logging: ['query', 'schema', 'error'],
 });
