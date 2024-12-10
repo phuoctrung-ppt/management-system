@@ -15,7 +15,7 @@ export class AuthService {
   ) {}
 
   async signIn(userLogin: UserLoginDTO) {
-    const user = await this.userService.findOne(userLogin.username);
+    const user = await this.userService.findByUsername(userLogin.username);
     if (!user) {
       return null;
     }

@@ -25,10 +25,10 @@ export class JobTable1733479624770 implements MigrationInterface {
           {
             name: 'experience',
             type: 'varchar',
-            length: '10',
+            length: '50',
             isNullable: true,
           },
-          { name: 'requirements', type: 'text' },
+          { name: 'requirement', type: 'text' },
           { name: 'description', type: 'text' },
           { name: 'location', type: 'varchar', length: '255' },
           {

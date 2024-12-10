@@ -14,6 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { CacheService } from '../cache/cache.service';
+import { Public } from 'src/decorators/public-route';
 
 @ApiTags('users')
 @Controller('users')
@@ -26,6 +27,7 @@ export class UsersController {
     description: 'Create a new user',
   })
   @ApiBody({ type: CreateUserDto })
+  @Public()
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);

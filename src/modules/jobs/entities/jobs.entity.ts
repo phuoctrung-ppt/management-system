@@ -1,12 +1,7 @@
 import { User } from 'src/modules/users/entities/user.entity';
 import { BaseEntity } from 'src/shared/base-entity';
 import { JobStatus, JobType } from 'src/shared/enum';
-import {
-    Column,
-    Entity,
-    JoinColumn,
-    ManyToOne
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 @Entity('jobs')
 export class Job extends BaseEntity {
   @Column({ type: 'varchar', length: 255 })
@@ -15,11 +10,11 @@ export class Job extends BaseEntity {
   @Column({ type: 'smallint', nullable: true })
   number_of_vacancies: number;
 
-  @Column({ type: 'varchar', length: 10, nullable: true })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   experience: string;
 
   @Column({ type: 'text' })
-  requirements: string;
+  requirement: string;
 
   @Column({ type: 'text' })
   description: string;
@@ -36,13 +31,10 @@ export class Job extends BaseEntity {
   @Column({ type: 'enum', enum: JobStatus, default: JobStatus.OPEN })
   status: JobStatus;
 
-  @Column({ type: 'varchar', length: 255 })
-  created_by: string;
-
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'created_by' })
-  user: User;
+  created_by: User;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', nullable: true })
   ended_date: Date;
 }

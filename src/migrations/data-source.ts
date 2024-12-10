@@ -15,7 +15,7 @@ const AppDataSource = new DataSource({
   database: process.env.DATABASE_NAME, // your database name
   entities: [__dirname + '/../entities/*.entity{.ts,.js}'],
   dropSchema: true,
-  migrations: [join(__dirname, '../migrations/1733479712248-appointment-table.ts')],
+  migrations: [join(__dirname, '../migrations/1733479624770-job-table.ts')],
   synchronize: false, // Don't use synchronize in production
   logging: ['query', 'schema', 'error'],
 });

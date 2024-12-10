@@ -15,7 +15,7 @@ redis:
   ttl: 60
 jwt:
   secret: secret
-  expired: 3600
+  expired: 36000000
   publicKey:
   algorithm: RS256
 

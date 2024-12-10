@@ -8,6 +8,8 @@ import { DatabaseModule } from './configs/database.module';
 import { CacheModule } from './modules/cache/cache.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { JobsModule } from './modules/jobs/jobs.module';
+import { ApplicantsModule } from './modules/applicants/applicants.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { AuthModule } from './modules/auth/auth.module';
     TerminusModule,
     UsersModule,
     AuthModule,
+    JobsModule,
+    ApplicantsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
