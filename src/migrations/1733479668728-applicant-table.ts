@@ -19,7 +19,14 @@ export class ApplicantTable1733479668728 implements MigrationInterface {
           {
             name: 'status',
             type: 'enum',
-            enum: ['APPLIED', 'INVITED', 'REJECTED', 'HIRED', 'NONE'],
+            enum: [
+              'APPLIED',
+              'AI_REVIEW',
+              'INVITED',
+              'REJECTED',
+              'HIRED',
+              'NONE',
+            ],
             default: `'APPLIED'`,
           },
           { name: 'resume', type: 'text' },

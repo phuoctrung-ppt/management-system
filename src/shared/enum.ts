@@ -18,6 +18,7 @@ export enum JobStatus {
 
 export enum ApplicantStatus {
   APPLIED = 'APPLIED',
+  AI_REVIEW = 'AI_REVIEW',
   INVITED = 'INVITED',
   REJECTED = 'REJECTED',
   HIRED = 'HIRED',

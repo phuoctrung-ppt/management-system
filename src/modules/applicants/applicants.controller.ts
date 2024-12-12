@@ -5,7 +5,9 @@ import { ApplicantDTO } from './dto/applicant.dto';
 
 @Controller('applicants')
 export class ApplicantsController {
-  constructor(private readonly applicantsService: ApplicantsService) {}
+  constructor(
+    private readonly applicantsService: ApplicantsService,
+  ) {}
 
   @Post('apply/:jobId')
   async applyToJob(
