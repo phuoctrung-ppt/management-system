@@ -29,6 +29,9 @@ export class Applicant extends BaseEntity {
   @Column({ type: 'uuid' })
   user_id: string;
 
+  @Column({ type: 'varchar', nullable: true, length: '50' })
+  matched_with: string;
+
   @ManyToOne(() => Job, (job) => job.id)
   @JoinColumn({ name: 'job_id' })
   job: Job;

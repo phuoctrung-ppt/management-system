@@ -31,6 +31,12 @@ export class ApplicantTable1733479668728 implements MigrationInterface {
           },
           { name: 'resume', type: 'text' },
           { name: 'submitted_at', type: 'date' },
+          {
+            name: 'matched_with',
+            type: 'varchar',
+            length: '50',
+            isNullable: true,
+          },
           { name: 'job_id', type: 'uuid' },
           {
             name: 'user_id',

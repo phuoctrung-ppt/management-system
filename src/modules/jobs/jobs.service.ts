@@ -15,4 +15,12 @@ export class JobsService {
     const createdJob = this.jobRepo.create(newJob);
     return this.jobRepo.save(createdJob);
   }
+
+  async getJobById(id: string) {
+    return this.jobRepo.findOne({
+      where: {
+        id,
+      },
+    });
+  }
 }

@@ -10,6 +10,10 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { JobsModule } from './modules/jobs/jobs.module';
 import { ApplicantsModule } from './modules/applicants/applicants.module';
+import { OpenAIModule } from './modules/open-ai/open-ai.module';
+import { FilesModule } from './modules/files/files.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -17,13 +21,19 @@ import { ApplicantsModule } from './modules/applicants/applicants.module';
       isGlobal: true,
       load: [configuration],
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'resumes'),
+      serveRoot: '/resumes',
+    }),
     CacheModule,
     DatabaseModule,
-    ApplicantsModule,
     TerminusModule,
     UsersModule,
     AuthModule,
     JobsModule,
+    ApplicantsModule,
+    FilesModule,
+    OpenAIModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -3,7 +3,7 @@ import {
   RegisterQueueAsyncOptions,
   RegisterQueueOptions,
 } from '@nestjs/bullmq';
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, forwardRef, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { QueueProcessor } from './queue.processor';
 import { OpenAIService } from '../open-ai/open-ai.service';
@@ -54,9 +54,9 @@ export class QueueModule {
 
     return {
       module: QueueModule,
-      imports: [OpenAIModule, ...registerQueue],
-      exports: registerQueue,
-      providers: [OpenAIService, QueueProcessor],
+      imports: [forwardRef(() => OpenAIModule), ...registerQueue],
+      exports: [BullModule, ...registerQueue],
+      providers: [QueueProcessor],
     };
   }
 }
