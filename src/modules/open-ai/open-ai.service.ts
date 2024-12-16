@@ -1,11 +1,12 @@
 import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { readFileSync } from 'fs';
+import { existsSync } from 'fs';
 import { OpenAI } from 'openai';
+import { join } from 'path';
 import * as pdfParse from 'pdf-parse';
+import { ApplicantStatus } from 'src/shared/enum';
 import { ApplicantsService } from '../applicants/applicants.service';
 import { JobsService } from '../jobs/jobs.service';
-import { join } from 'path';
 
 @Injectable()
 export class OpenAIService {
@@ -29,14 +30,14 @@ export class OpenAIService {
     applicant_id: string,
   ) {
     try {
+      const filePath = join(__dirname, '..', '..', '..', '..', resumeUrl);
       this.logger.log(
-        `Process scaning cv with data: ${join(__dirname, '..', '..', '..', '..', resumeUrl)},  job_id: ${job_id}, applicant_id: ${applicant_id}`,
+        `Process scanning cv with data: ${filePath},  job_id: ${job_id}, applicant_id: ${applicant_id}`,
       );
-      const pdfBuffer = readFileSync(
-        join(process.cwd(), '..', '..', '..', '..', resumeUrl),
-        'utf-8',
-      ).toString();
-      const pdfData = await pdfParse(pdfBuffer);
+      if (!existsSync(filePath)) {
+        return new Error('File not found');
+      }
+      const pdfData = await pdfParse(filePath);
       const resumeText = pdfData.text;
       const job = await this.jobService.getJobById(job_id);
       const jobRequirements = job.requirement;
@@ -44,7 +45,8 @@ export class OpenAIService {
       if (response) {
         this.applicantService.updateApplicant({
           id: applicant_id,
-          matched_with: response.matched_with,
+          matched_with: response.trim(),
+          status: ApplicantStatus.AI_REVIEW,
         });
       }
     } catch (error) {
@@ -60,29 +62,25 @@ export class OpenAIService {
   async promptReviewCV(
     resume: string,
     jobRequirement: string,
-  ): Promise<Record<'matched_with' | 'summary', string>> {
-    const prompt = `
-      You are an expert career advisor. Compare the following:
-
-      Candidate's resume:
-      ${resume}\n
-
-      Job requirements:
-      ${jobRequirement}\n
-
-     Provide:
-      1. A percentage match.
-      2. A summary of the candidate's qualifications.
-      3. Return json data like this: {matched_with: 80%, summary: '... with content lower than 50char' }
-    `;
+  ): Promise<string> {
     const response = await this.openAI.chat.completions.create({
-      model: 'gpt-3.5-turbo-instruct',
-      messages: [{ role: 'user', content: prompt }],
+      model: 'gpt-4o',
+      messages: [
+        {
+          role: 'system',
+          content: `You are an expert career advisor. Compare the following: ${jobRequirement}`,
+        },
+        {
+          role: 'user',
+          content: `Candidate's resume: ${resume}`,
+        },
+        {
+          role: 'user',
+          content: `Return only the matching percentage as a single value. For example: "95%". Do not include additional information or JSON format.`,
+        },
+      ],
       temperature: 0.75,
     });
-    return response.choices[0].message.content as unknown as Record<
-      'matched_with' | 'summary',
-      string
-    >;
+    return response.choices[0].message.content as unknown as string;
   }
 }

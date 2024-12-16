@@ -72,4 +72,14 @@ export class ApplicantsService {
     });
     return updatedApplicant;
   }
+
+  async getApplicant(id: string) {
+    const applicant = await this.applicantRepo.findOne({
+      where: { id },
+    });
+    if (!applicant) {
+      return new HttpException('Applicant not found', HttpStatus.NOT_FOUND);
+    }
+    return applicant;
+  }
 }

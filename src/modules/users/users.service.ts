@@ -55,4 +55,13 @@ export class UsersService {
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     return this.userRepo.delete(id);
   }
+
+  async updateUserResume(
+    id: string,
+    resume: string,
+  ): Promise<HttpException | unknown> {
+    const user = await this.findOne(id);
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    return this.userRepo.update(id, { resume });
+  }
 }

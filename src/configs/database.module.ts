@@ -19,7 +19,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         seeds: [__dirname + '/seeds/*{.ts,.js}'],
         autoLoadEntities: configService.get('env') !== 'production',
         synchronize: configService.get('env') !== 'production',
-        logging: configService.get('env') !== 'production',
+        // logging: configService.get('env') !== 'production',
       }),
     }),
   ],

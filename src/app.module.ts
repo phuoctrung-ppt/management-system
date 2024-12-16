@@ -22,8 +22,9 @@ import { join } from 'path';
       load: [configuration],
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'resumes'),
+      rootPath: join(__dirname, '..', 'resumes'),
       serveRoot: '/resumes',
+      renderPath: '/resumes',
     }),
     CacheModule,
     DatabaseModule,

@@ -2,14 +2,14 @@ env: development
 app:
   port: 3000
 database:
-  type: postgres
-  host: localhost
-  port: 5432
-  database: hr_management
-  user: postgres
-  password: postgres
+  type: 
+  host: 
+  port: 
+  database: 
+  user: 
+  password: 
 redis:
-  host: localhost
+  host: 
   port: 6379
   password:
   ttl: 60
@@ -18,4 +18,8 @@ jwt:
   expired: 36000000
   publicKey:
   algorithm: RS256
-
+open-ai:
+  api-key:
+  project-id:
+multer:
+  destination: resumes

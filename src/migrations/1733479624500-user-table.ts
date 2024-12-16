@@ -39,6 +39,11 @@ export class UserTable1733479624500 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'resume',
+            type: 'text',
+            isNullable: true,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

@@ -2,8 +2,10 @@ import {
   Body,
   Controller,
   FileTypeValidator,
+  Get,
   Param,
   ParseFilePipe,
+  Patch,
   Post,
   Request,
   UploadedFile,
@@ -16,10 +18,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('applicants')
 export class ApplicantsController {
-  constructor(
-    private readonly applicantsService: ApplicantsService,
-  ) {}
+  constructor(private readonly applicantsService: ApplicantsService) {}
 
+  //TODO: Implement Author, the endpoint just granted to the APPLICANT role
   @Post('apply/:jobId')
   @UseInterceptors(FileInterceptor('file'))
   async applyToJob(
@@ -39,5 +40,20 @@ export class ApplicantsController {
       file,
       applicantDTO,
     );
+  }
+
+  //TODO: Implement Author, the endpoint just granted to the HR role
+  @Patch(':id')
+  async updateApplicant(
+    @Param('id') id: string,
+    @Body() applicantDTO: ApplicantDTO,
+  ) {
+    const payload = { ...applicantDTO, id };
+    return this.applicantsService.updateApplicant(payload);
+  }
+
+  @Get(':id')
+  async getApplicant(@Param('id') id: string) {
+    return this.applicantsService.getApplicant(id);
   }
 }
